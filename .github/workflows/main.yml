@@ -4,7 +4,8 @@ name: SKYORA APK Build
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
@@ -28,8 +29,22 @@ jobs:
       - name: Create Android project
         run: flutter create . --platforms=android
 
+      - name: Check project files
+        run: |
+          pwd
+          ls -la
+          cat pubspec.yaml
+          flutter --version
+
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          flutter pub deps
+
+      - name: Install icon generator
+        run: |
+          flutter pub add --dev flutter_launcher_icons:^0.14.3
+          flutter pub get
 
       - name: Generate app icon
         run: dart run flutter_launcher_icons
