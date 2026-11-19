@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'region.dart';
 import 'kma_service.dart';
+import 'dart:ui' as ui;
 
 void main() { WidgetsFlutterBinding.ensureInitialized(); runApp(const SkyoraApp()); }
 class SkyoraApp extends StatefulWidget { const SkyoraApp({super.key}); @override State<SkyoraApp> createState()=>_SkyoraAppState(); }
@@ -80,7 +81,7 @@ class ForecastPainter extends CustomPainter {
   @override void paint(Canvas canvas,Size size){final paint=Paint()..color=color..strokeWidth=3..style=PaintingStyle.stroke..strokeCap=StrokeCap.round;
     final valid=values.whereType<double>().toList();if(valid.length<2)return;
     final lo=valid.reduce(math.min),hi=valid.reduce(math.max);final span=(hi-lo).abs()<.001?1.0:hi-lo;
-    final path=Path();bool started=false;
+    final path=ui.Path();bool started=false;
     for(int i=0;i<values.length;i++){final v=values[i];if(v==null){started=false;continue;}final x=12+(size.width-24)*i/(values.length-1);final y=15+(size.height-30)*(1-(v-lo)/span);if(!started){path.moveTo(x,y);started=true;}else{path.lineTo(x,y);}canvas.drawCircle(Offset(x,y),3,Paint()..color=color);}
     canvas.drawPath(path,paint);
   }
