@@ -42,7 +42,7 @@ jobs:
         run: dart run flutter_launcher_icons -f ../flutter_launcher_icons.yaml
 
       - name: Build APK
-        run: flutter build apk --debug
+        run: flutter build apk --debug --dart-define=SKYORA_PROXY_URL="${{ vars.SKYORA_PROXY_URL }}"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
